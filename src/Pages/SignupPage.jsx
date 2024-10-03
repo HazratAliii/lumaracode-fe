@@ -36,6 +36,12 @@ const SignupPage = () => {
       handleCallback();
     }
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, []);
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Left section: Sign-up form */}
