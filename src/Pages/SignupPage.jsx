@@ -1,7 +1,20 @@
 import React from "react";
 import Google_symbol from "../assets/google_symbol.svg.png";
 import Flower from "../assets/Flower.png";
+import axios from "axios";
+
 const SignupPage = () => {
+  const handleLogin = async () => {
+    try {
+      const response = axios.get(
+        "https://lumaracode-api.vercel.app/api/v1/auth/google/callback",
+        { withCredentials: true }
+      );
+      console.log("Response ", response);
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Left section: Sign-up form */}
@@ -11,7 +24,10 @@ const SignupPage = () => {
           <p className="text-gray-600 mb-8">Sign up for free</p>
 
           {/* Google Button */}
-          <button className="flex items-center justify-center w-full py-3 mb-4 border rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white border-gray-300 hover:bg-gray-50">
+          <button
+            className="flex items-center justify-center w-full py-3 mb-4 border rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white border-gray-300 hover:bg-gray-50"
+            onClick={handleLogin}
+          >
             <img
               src={Google_symbol}
               alt="Google Icon"
