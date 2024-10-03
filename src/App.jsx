@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Subtract from "./assets/Subtract.png";
 import HeroImg from "./assets/HeroImg.png";
 import Airbnb from "./assets/Airbnb.png";
@@ -8,8 +8,16 @@ import Microsoft from "./assets/Microsoft.png";
 import Amazon from "./assets/Amazon.png";
 import Card from "./assets/Card.png";
 import Like from "./assets/Like.png";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, []);
   return (
     <div className="font-sans bg-[#F4F5FC]">
       {/* Navigation Bar */}
@@ -45,7 +53,7 @@ const App = () => {
           </p>
           <div className="space-x-4">
             <button className="px-6 py-3 bg-[#3B52CF] text-white rounded-md">
-              Get in touch
+              <a href="/signup">Sign up</a>
             </button>
             <a href="#" className="text-[#6B708D] hover:underline">
               See our work

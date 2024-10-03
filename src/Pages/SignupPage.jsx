@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Google_symbol from "../assets/google_symbol.svg.png";
 import Flower from "../assets/Flower.png";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
-      const response = axios.get(
-        "https://lumaracode-api.vercel.app/api/v1/auth/google/callback",
-        { withCredentials: true }
-      );
-      console.log("Response ", response);
+      window.location.href =
+        "https://lumaracode-api.vercel.app/api/v1/auth/google/callback";
     } catch (err) {
       alert(err);
     }
   };
+  const handleCallback = async () => {
+    // Get the token from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      // Store the token in localStorage
+      localStorage.setItem("authToken", token);
+      // Redirect to the dashboard
+      navigate("/dashboard");
+    } else {
+      console.error("No token found in the URL");
+      // Handle the error or redirect to login page
+      navigate("/");
+    }
+  };
+
+  useEffect(() => {
+    // If the current path is the callback route, handle the callback logic
+    if (window.location.pathname === "/auth/google/callback") {
+      handleCallback();
+    }
+  }, []);
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Left section: Sign-up form */}
